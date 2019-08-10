@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Stack:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Stack_jar</output-path>
+    <root id="archive" name="Stack.jar">
+      <element id="module-output" name="Stack" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Raw/processing-3.5.3/core/library/jogl-all.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Raw/processing-3.5.3/core/library/gluegen-rt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Compressed/peasycam/library/peasy-math.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Compressed/peasycam/library/peasycam.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Raw/processing-3.5.3/core/library/core.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
