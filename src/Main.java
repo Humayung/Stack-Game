@@ -4,6 +4,21 @@ import processing.core.PVector;
 import java.util.ArrayList;
 
 public class Main extends PApplet {
+    public Main() {
+        startColor = color(random(256), random(256), random(256));
+        endColor = color(random(256), random(256), random(256));
+        initialTileBounds = new PVector(350, 350, 40);
+        tileBounds = initialTileBounds.copy();
+        rubbles = new ArrayList<>();
+        oscillatingSpeed = 0.03f;
+        MAX_TILES_ONSCREEN = 17;
+        playButtonAlpha = 255;
+        minimumCombo = 0;
+        ERROR_MARGIN = 10;
+        desiredScale = 1f;
+        scale = 0.1f;
+    }
+
     public static void main(String[] args) {
         PApplet.main("Main", args);
     }
@@ -14,38 +29,58 @@ public class Main extends PApplet {
 
     private ArrayList<Tile> tiles;
     private ArrayList<Tile> displayTiles;
+    private ArrayList<Tile> rubbles;
+
     private Waves waves;
-    private final int ERROR_MARGIN = 10;
-    private final int MAX_TILES_ONSCREEN = 17;
+    private final int ERROR_MARGIN;
+    private final int MAX_TILES_ONSCREEN;
 
-    private float scale = 0.1f;
-    private float desiredScale = 1f;
+    private float scale;
+    private float desiredScale;
     private int bgColor;
-    private int combo = 0;
+    private float playButtonAlpha;
 
+    private PVector initialTileBounds;
     private PVector tileBounds;
-    private PVector initialStackBounds;
     private ParticleSystem particleSystem;
 
-    public void setup() {
-        particleSystem = new ParticleSystem();
-        tileBounds = new PVector(350, 350, 40);
-        initialStackBounds = tileBounds.copy();
-        waves = new Waves();
-        newGame();
-        ortho(-width / 2, width / 2, -height / 2, height / 2, -width, width);
-        textSize(60);
-        textAlign(CENTER);
-    }
 
     private Tile oscillatingTile;
     private Tile topTile;
 
+    private int minimumCombo;
+    private int score;
+    private int highScore;
+    private int combo;
+    private boolean gameOver;
+    private boolean gameStarted;
+
+    private float cameraZ;
+    private float desiredCameraZ;
+    private boolean isMovingOnX;
+
+    private int colorPos;
+    private int startColor;
+    private int endColor;
+
+
+    private float time;
+    private float oscillatingSpeed;
+
+    public void setup() {
+        ortho(-width / 2, width / 2, -height / 2, height / 2, -width, width);
+        particleSystem = new ParticleSystem();
+        waves = new Waves();
+        textAlign(CENTER);
+        textSize(60);
+        newGame();
+    }
+
     public void draw() {
         background(bgColor);
         scale = lerp(scale, desiredScale, 0.1f);
-        lights();
         translate(width / 2, height / 2);
+        lights();
 
         pushMatrix();
         {
@@ -56,75 +91,77 @@ public class Main extends PApplet {
             translate(0, 0, cameraZ);
 
             oscillatingTile.update();
-            for (Tile tile : displayTiles) {
-                tile.update();
-            }
+            displayTiles.forEach(Tile::update);
+            manageRubbles();
             waves.update();
             particleSystem.run();
         }
         popMatrix();
-
-        if (gameStarted) {
-            oscillate();
-        }
+        if (gameStarted) oscillate();
         drawUI();
     }
 
 
-    void drawUI(){
-
-        if(gameStarted){
+    private void drawUI() {
+        // Play Button, Score, and HighScore
+        if (gameStarted) {
             fill(255);
             text(score, 0, -height / 4, 250);
-        }else{
+        } else {
             fill(255, 200, 0);
-            text(highScore, 0, height / 4 + 100, 250);
+            text(highScore, 0, (height / 4) + 100, 250);
         }
         drawPlayButton(0, 0, 250, height / 4);
     }
 
     private void newGame() {
-        bgColor = color(random(150, 256), random(150, 256), random(150, 256));
-        startColor = color(random(256), random(256), random(256));
-        endColor = color(random(256), random(256), random(256));
+        bgColor = color(
+                random(150, 256),
+                random(150, 256),
+                random(150, 256)
+        );
+        startColor = color(
+                random(256),
+                random(256),
+                random(256)
+        );
+        endColor = color(
+                random(256),
+                random(256),
+                random(256)
+        );
 
         tiles = new ArrayList<>();
         displayTiles = new ArrayList<>();
-        tileBounds = initialStackBounds.copy();
-
+        tileBounds = initialTileBounds.copy();
         topTile = new Tile(new PVector(), tileBounds, getNextColor());
-
         tiles.add(topTile);
         displayTiles.add(topTile);
         oscillatingTile = new Tile(new PVector(0, 0, tileBounds.z), tileBounds, getNextColor());
         desiredCameraZ = 0;
-        if(highScore < score) highScore = score;
+        highScore = (highScore < score)
+                ? score
+                : highScore;
         score = 0;
-        oscillatingSpeed = 0.03f;
+        oscillatingSpeed = .03f;
     }
 
-    private int score = 0;
-    private int highScore = 0;
-    private boolean gameOver = false;
-    private boolean gameStarted = false;
 
+    @Override
     public void keyPressed() {
         if (key == ' ') {
             if (gameStarted) {
-                if (!gameOver) {
-                    if (!placeBox()) {
-                        desiredScale = min(0.8f, sqrt(tiles.size()) / (tiles.size() / 2f));
-                        displayTiles = tiles;
-                        gameOver = true;
-                    } else {
-                        score++;
-                        oscillatingSpeed += (sqrt(tiles.size()) / sq(tiles.size())) / 300.0f;
-                    }
-                } else {
+                if (gameOver) {
                     gameOver = false;
                     gameStarted = false;
                     desiredScale = 1;
                     newGame();
+                } else {
+                    if (!placeBox()) {
+                        desiredScale = min(0.8f, sqrt(tiles.size()) / (tiles.size() / 2f));
+                        displayTiles = tiles;
+                        gameOver = true;
+                    } else oscillatingSpeed += (sqrt(tiles.size()) / sq(tiles.size())) / 300f;
                 }
 
             } else {
@@ -134,18 +171,19 @@ public class Main extends PApplet {
         }
     }
 
-    private float playButtonAlpha = 255;
-
     private void drawPlayButton(float x, float y, float z, float size) {
-        playButtonAlpha = lerp(playButtonAlpha, gameStarted ? 0 : 255, 0.1f);
+        playButtonAlpha = lerp(playButtonAlpha, gameStarted
+                        ? 0
+                        : 255,
+                0.1f);
         if (playButtonAlpha > 0.1) {
             // Centroid
             float cx = 0.25f;
             float cy = 0.5f;
-            /**/
+            //
             pushMatrix();
             {
-                translate(x - cx * size, y - cy * size, z);
+                translate(x - (cx * size), y - (cy * size), z);
                 scale(size);
 
                 // Perimeter
@@ -153,7 +191,7 @@ public class Main extends PApplet {
                 stroke(0, playButtonAlpha);
                 strokeWeight(0.15f);
                 ellipse(cx, cy, 1.5f, 1.5f);
-                /**/
+                //
 
                 noStroke();
                 fill(0, playButtonAlpha);
@@ -171,20 +209,37 @@ public class Main extends PApplet {
         }
     }
 
-    private float cameraZ = 0;
-    private float desiredCameraZ = 0;
-    private boolean isMovingOnX = false;
+    private void manageRubbles() {
+        for (int i = rubbles.size() - 1; i >= 0; i--) {
+            Tile r = rubbles.get(i);
+            if (r.off) {
+                rubbles.remove(i);
+            } else {
+                r.update();
+            }
+        }
+    }
 
     private boolean placeBox() {
         if (isMovingOnX) {
             combo = 0;
-            float deltaX = abs(topTile.pos.x - oscillatingTile.pos.x);
-            if (deltaX > ERROR_MARGIN) {
+            float deltaX = topTile.pos.x - oscillatingTile.pos.x;
+            if (abs(deltaX) > ERROR_MARGIN) {
 
                 // Cut tile
-                tileBounds.x -= deltaX;
-                if (tileBounds.x < 0) return false;
-                float middle = topTile.pos.x + oscillatingTile.pos.x / 2;
+                tileBounds.x -= abs(deltaX);
+                if (tileBounds.x < 0) {
+                    rubbles.add(oscillatingTile);
+                    oscillatingTile.dissolve();
+                    return false;
+                }
+                float rubbleX = oscillatingTile.pos.x + (deltaX > 0 ? -1 : 1) * tileBounds.x / 2;
+                PVector rubbleScale = new PVector(deltaX, tileBounds.y, tileBounds.z);
+                Tile rubble = new Tile(new PVector(rubbleX, oscillatingTile.pos.y, oscillatingTile.pos.z), rubbleScale, oscillatingTile.color);
+                rubbles.add(rubble);
+                rubble.dissolve();
+                score++;
+                float middle = topTile.pos.x + (oscillatingTile.pos.x / 2);
                 oscillatingTile.setScale(tileBounds);
                 oscillatingTile.setPos(middle - (topTile.pos.x / 2), topTile.pos.y, oscillatingTile.pos.z);
             } else {
@@ -193,21 +248,31 @@ public class Main extends PApplet {
                 oscillatingTile.setPos(topTile.pos.x, topTile.pos.y, oscillatingTile.pos.z);
                 waves.init(oscillatingTile.pos, tileBounds);
                 combo++;
-                score += deltaX;
-                if (combo >= 10) {
+                score += ERROR_MARGIN - abs(deltaX);
+                if (combo >= minimumCombo) {
                     oscillatingTile.scaleUp(10, 0);
                     tileBounds.add(10, 0);
                 }
             }
         } else {
             combo = 0;
-            float deltaY = abs(topTile.pos.y - oscillatingTile.pos.y);
-            if (deltaY > ERROR_MARGIN) {
+            float deltaY = topTile.pos.y - oscillatingTile.pos.y;
+            if (abs(deltaY) > ERROR_MARGIN) {
 
                 // Cut Tile
-                tileBounds.y -= deltaY;
-                if (tileBounds.y < 0) return false;
-                float middle = topTile.pos.y + oscillatingTile.pos.y / 2;
+                tileBounds.y -= abs(deltaY);
+                if (tileBounds.y < 0) {
+                    rubbles.add(oscillatingTile);
+                    oscillatingTile.dissolve();
+                    return false;
+                }
+                float rubbleY = oscillatingTile.pos.y + (deltaY > 0 ? -1 : 1) * tileBounds.y / 2;
+                PVector rubbleScale = new PVector(tileBounds.x, deltaY, tileBounds.z);
+                Tile rubble = new Tile(new PVector(oscillatingTile.pos.x, rubbleY, oscillatingTile.pos.z), rubbleScale, oscillatingTile.color);
+                rubble.dissolve();
+                rubbles.add(rubble);
+                score++;
+                float middle = topTile.pos.y + (oscillatingTile.pos.y / 2);
                 oscillatingTile.setScale(tileBounds);
                 oscillatingTile.setPos(topTile.pos.x, middle - (topTile.pos.y / 2), oscillatingTile.pos.z);
             } else {
@@ -216,8 +281,8 @@ public class Main extends PApplet {
                 oscillatingTile.setPos(topTile.pos.x, topTile.pos.y, oscillatingTile.pos.z);
                 waves.init(oscillatingTile.pos, tileBounds);
                 combo++;
-                score += deltaY;
-                if (combo >= 10) {
+                score += ERROR_MARGIN - abs(deltaY);
+                if (combo >= minimumCombo) {
                     oscillatingTile.scaleUp(0, 10);
                     tileBounds.add(0, 10);
                 }
@@ -233,38 +298,30 @@ public class Main extends PApplet {
         }
         oscillatingTile = new Tile(oscillatingTile.pos.copy().add(0, 0, tileBounds.z), tileBounds, getNextColor());
         desiredCameraZ -= tileBounds.z;
-        time = -HALF_PI;
         isMovingOnX = !isMovingOnX;
+        time = -HALF_PI;
         oscillate();
         return true;
     }
 
-    private int count = 0;
-    private int startColor = color(random(256), random(256), random(256));
-    private int endColor = color(random(256), random(256), random(256));
-
     private int getNextColor() {
         final int colorRange = 12;
-        count = (count + 1) % colorRange;
-        if (count == 0) {
+        colorPos = (colorPos + 1) % colorRange;
+        if (colorPos == 0) {
             startColor = endColor;
             endColor = color(random(256), random(256), random(256));
         }
-        float amt = (float) count / colorRange;
+        float amt = (float) colorPos / colorRange;
         return lerpColor(startColor, endColor, amt);
     }
-
-    private float time = 0;
-    private float oscillatingSpeed = 0.03f;
 
     private void oscillate() {
         if (!gameOver) {
             time += oscillatingSpeed;
             if (isMovingOnX)
-                oscillatingTile.pos.x = sin(time) * (initialStackBounds.x + 100);
+                oscillatingTile.pos.x = sin(time) * (initialTileBounds.x + 100);
             else
-                oscillatingTile.pos.y = sin(time) * (initialStackBounds.y + 100);
-
+                oscillatingTile.pos.y = sin(time) * (initialTileBounds.y + 100);
         }
     }
 
@@ -291,19 +348,30 @@ public class Main extends PApplet {
     */
 
     class Tile {
-        PVector scale;
+        private PVector rot;
+        private PVector aVel;
+        float desiredAlpha = 255;
         PVector desiredScale;
-        PVector pos;
         PVector desiredPos;
+        PVector scale;
+        PVector pos;
+        PVector vel;
+
+        boolean dissolve;
+        float alpha = 0;
         int color;
+        boolean off;
 
         Tile(PVector pos, PVector scale, int color) {
-            this.pos = pos.copy();
+            this.desiredScale = scale.copy();
             this.desiredPos = pos.copy();
             this.scale = scale.copy();
-            this.desiredScale = scale.copy();
+            this.pos = pos.copy();
             this.color = color;
 
+            aVel = PVector.random3D().mult(0.01f);
+            rot = new PVector();
+            vel =  PVector.random3D().mult(0.08f);
         }
 
         void update() {
@@ -311,17 +379,27 @@ public class Main extends PApplet {
             PVector pScale = scale.copy();
             scale.lerp(desiredScale, 0.2f);
             pos.add(PVector.sub(scale, pScale).mult(0.5f));
+            if (alpha < 0.1) off = true;
+            alpha = lerp(alpha, desiredAlpha, 0.04f);
+            if(dissolve) {
+                rot.add(aVel);
+                pos.add(vel);
+            }
+
             display();
         }
 
         void display() {
             noStroke();
-            fill(color);
+            fill(color, alpha);
 
             // Drawing tile
             pushMatrix();
             {
-                translate(pos.x - scale.x / 2, pos.y - scale.y / 2, pos.z - scale.z / 2);
+                translate(pos.x - (scale.x / 2), pos.y - (scale.y / 2), pos.z - (scale.z / 2));
+                rotateX(rot.x);
+                rotateY(rot.y);
+                rotateZ(rot.z);
                 beginShape(QUAD);
                 {
                     vertex(0, 0, 0);
@@ -364,12 +442,18 @@ public class Main extends PApplet {
         }
 
         private void setScale(PVector scale) {
-            this.scale = scale.copy();
             this.desiredScale = scale.copy();
+            this.scale = scale.copy();
         }
 
         private void setPos(float x, float y, float z) {
             this.pos = new PVector(x, y, z);
+        }
+
+        public void dissolve() {
+            desiredAlpha = 0;
+            alpha = 255;
+            dissolve = true;
         }
     }
 
@@ -381,36 +465,32 @@ public class Main extends PApplet {
         }
 
         void update() {
-            for (Rect r : waves) {
-                r.update();
-            }
+            waves.forEach(Rect::update);
             for (int i = waves.size() - 1; i >= 0; i--) {
                 Rect r = waves.get(i);
-                if (r.off) {
-                    waves.remove(i);
-                } else {
-                    r.update();
-                }
+                if (r.off) waves.remove(i);
+                else r.update();
             }
         }
 
         class Rect {
-            PVector pos;
-            PVector scale;
             PVector desiredScale;
-            float lifespan = 255;
+            float lifespan;
+            PVector scale;
+            PVector pos;
             boolean off;
 
             Rect(PVector pos, PVector scale) {
-                this.pos = pos.copy();
+                this.desiredScale = scale.copy().add(scale.copy().mult(0.3f));
                 this.scale = scale.copy();
-                this.desiredScale = this.scale.copy().add(scale.copy().mult(0.2f));
+                this.pos = pos.copy();
+                lifespan = 255;
             }
 
             void display() {
                 pushMatrix();
                 {
-                    translate(pos.x - scale.x / 2, pos.y - scale.y / 2, pos.z);
+                    translate(pos.x - (scale.x / 2), pos.y - (scale.y / 2), pos.z);
                     fill(255, 200, 0, lifespan);
                     beginShape(QUAD);
                     {
@@ -434,23 +514,20 @@ public class Main extends PApplet {
     }
 
     class ParticleSystem {
-        ArrayList<Particle> particles;
-
-        ParticleSystem() {
-            particles = new ArrayList<>();
-        }
+        ArrayList<Particle> particles = new ArrayList<>();
 
         void run() {
             if (random(1) < 0.05) {
-                particles.add(new Particle(random(-width / 2, width / 2) - 300, random(-height / 2, height / 2) - 300, random(-200, 200) - cameraZ));
+                particles.add(new Particle(
+                        random(-width / 2, width / 2) - 300,
+                        random(-height / 2, height / 2) - 300,
+                        random(-200, 200) - cameraZ)
+                );
             }
             for (int i = particles.size() - 1; i >= 0; i--) {
                 Particle p = particles.get(i);
-                if (p.off) {
-                    particles.remove(i);
-                } else {
-                    p.update();
-                }
+                if (p.off) particles.remove(i);
+                else p.update();
             }
         }
 
@@ -460,37 +537,44 @@ public class Main extends PApplet {
         PVector rot;
         PVector aVel;
         PVector pos;
+
         boolean off;
-        int color;
+
         float alpha;
+        float time;
+        int color;
 
         Particle(float x, float y, float z) {
-            color = color(random(150, 256), random(150, 256), random(150, 256));
-            pos = new PVector(x, y, z);
+            color = color(
+                    random(150, 256),
+                    random(150, 256),
+                    random(150, 256)
+            );
             aVel = PVector.random3D().mult(0.01f);
+            pos = new PVector(x, y, z);
             rot = PVector.random3D();
         }
 
 
         void update() {
-            rot.add(aVel);
-            alpha = -cos(time) * 128 + 128;
+            alpha = (-cos(time) * 128) + 128;
             pos.add(0, 0, 0.3f);
+            rot.add(aVel);
             time += 0.01;
-            if (time > TWO_PI) off = true;
+            if (time > TWO_PI) {
+                off = true;
+            }
             display();
         }
-
-        float time = 0;
 
         void display() {
             pushMatrix();
             {
                 translate(pos.x, pos.y, pos.z);
+                fill(color, alpha);
                 rotateX(rot.x);
                 rotateY(rot.y);
                 rotateZ(rot.z);
-                fill(color, alpha);
                 box(10);
             }
             popMatrix();

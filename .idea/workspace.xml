@@ -7,9 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a34f9b4-7b46-43aa-9d2c-d9932c9d4c22" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/peasy_math.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Box.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stack.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Stack.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Stack_jar/Stack.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Stack_jar/Stack.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main.class" afterDir="false" />
@@ -30,17 +31,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1125">
-              <caret line="79" column="30" lean-forward="true" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="30" />
+            <state relative-caret-position="60">
+              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10011#10012#0" expanded="true" />
-                <element signature="e#10060#10061#0" expanded="true" />
-                <element signature="e#10261#10262#0" expanded="true" />
-                <element signature="e#10316#10317#0" expanded="true" />
-                <element signature="e#10441#10442#0" expanded="true" />
-                <element signature="e#10496#10497#0" expanded="true" />
-                <element signature="e#13241#13242#0" expanded="true" />
+                <element signature="e#607#608#0" expanded="true" />
+                <element signature="e#649#650#0" expanded="true" />
+                <element signature="e#13722#13723#0" expanded="true" />
+                <element signature="e#13978#13979#0" expanded="true" />
+                <element signature="e#12018#12019#0" expanded="true" />
+                <element signature="e#12073#12074#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,6 +67,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/RectImpl.java" />
+        <option value="$PROJECT_DIR$/src/WavesImpl.java" />
+        <option value="$PROJECT_DIR$/src/TileImpl.java" />
+        <option value="$PROJECT_DIR$/src/MainImpl.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -95,6 +99,52 @@
               <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+              <item name="gluegen-rt.jar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+              <item name="gluegen-rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="jogamp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+              <item name="gluegen-rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="jogamp" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+              <item name="gluegen-rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="jogamp" type="462c0819:PsiDirectoryNode" />
+              <item name="runtime" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gluegen-rt" type="70bed36:NamedLibraryElementNode" />
+              <item name="gluegen-rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="gluegen" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stack" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="jogl-all" type="70bed36:NamedLibraryElementNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -108,10 +158,15 @@
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="stack" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/create_ap" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Raw/processing-3.5.3/core/library/gluegen-rt.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -157,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565516137512</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Refactoring, adding particles">
+      <created>1565543467319</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1565543467319</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -194,22 +256,52 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modifying place box algorithm and refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifying place box algorithm and refactor" />
+    <MESSAGE value="Refactoring, adding particles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, adding particles" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="jar:///usr/lib/jvm/jdk-12.0.1/lib/src.zip!/java.base/java/util/function/Consumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RectImpl.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/WavesImpl.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TileImpl.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MainImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/Compressed/processing-sound-master/src/processing/sound/sound.jar!/ processing/sound/SoundFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="79" column="30" lean-forward="true" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="30" />
+        <state relative-caret-position="60">
+          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10011#10012#0" expanded="true" />
-            <element signature="e#10060#10061#0" expanded="true" />
-            <element signature="e#10261#10262#0" expanded="true" />
-            <element signature="e#10316#10317#0" expanded="true" />
-            <element signature="e#10441#10442#0" expanded="true" />
-            <element signature="e#10496#10497#0" expanded="true" />
-            <element signature="e#13241#13242#0" expanded="true" />
+            <element signature="e#607#608#0" expanded="true" />
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#13722#13723#0" expanded="true" />
+            <element signature="e#13978#13979#0" expanded="true" />
+            <element signature="e#12018#12019#0" expanded="true" />
+            <element signature="e#12073#12074#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -225,7 +317,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -280,7 +371,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>peasy-math</last-edited>
+          <last-edited>gluegen-rt</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
