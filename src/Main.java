@@ -1,4 +1,6 @@
 import processing.core.PApplet;
+import processing.core.PVector;
+
 import java.util.ArrayList;
 
 public class Main extends PApplet {
@@ -11,11 +13,15 @@ public class Main extends PApplet {
     }
 
     private final int boxLength = 40;
-    private final int boxSize = 350;
     private ArrayList<Box> boxes;
     private Waves waves;
+    private final int ERROR_MARGIN = 10;
+    PVector stackBounds;
+    PVector initialStackBounds;
 
     public void setup() {
+        stackBounds = new PVector(350, 350, 40);
+        initialStackBounds = stackBounds.copy();
         waves = new Waves();
         reset();
         ortho(-width / 2, width / 2, -height / 2, height / 2, -width, width);
@@ -30,7 +36,7 @@ public class Main extends PApplet {
     private int bgColor;
 
     public void draw() {
-        background(bgColor);
+        background(0);
         alternate();
         scale = lerp(scale, tScale, 0.1f);
         lights();
@@ -40,17 +46,19 @@ public class Main extends PApplet {
         rotateZ(QUARTER_PI);
         boxesFocus = lerp(boxesFocus, tBoxesFocus, 0.08f);
         scale(scale);
-        translate(-boxSize / 2, -boxSize / 2, boxesFocus);
+        translate(0, 0, boxesFocus);
 
         currentBox.display();
         for (Box box : boxes) {
             box.display();
         }
         waves.update();
+        drawOrigin();
         popMatrix();
 
         fill(255);
-        text(score, 0, -height / 4, 200);
+        text(score + (isMovingOnX ? "X" : "Y"), 0, -height / 4, 200);
+
     }
 
     private int score = 0;
@@ -71,68 +79,39 @@ public class Main extends PApplet {
         }
     }
 
+
     private boolean placeBox() {
-        Box topBox = boxes.get(boxes.size() - 1);
-        Box[] slicedBoxes = getSlicedBox(topBox, currentBox);
-        if (slicedBoxes[0] != null) {
-            if(topBox.area - slicedBoxes[0].area < 200){
-                slicedBoxes[0].set(topBox.x, topBox.y, slicedBoxes[0].z, topBox.w, topBox.h, topBox.l);
-                waves.init(slicedBoxes[0].x, slicedBoxes[0].y, slicedBoxes[0].z, slicedBoxes[0].w, slicedBoxes[0].h);
-                score += 4;
+        score++;
+        if(isMovingOnX){
+            float deltaX = abs(topBox.pos.x - currentBox.pos.x);
+            if(deltaX > ERROR_MARGIN){
+                stackBounds.x -= deltaX;
+                if(stackBounds.x < 0) return false;
+                float middle = topBox.pos.x + currentBox.pos.x / 2;
+                currentBox.setScale(stackBounds);
+                currentBox.setPos(middle - (topBox.pos.x/2f), topBox.pos.y, topBox.pos.z + stackBounds.z);
+            }else{
+                currentBox.setPos(topBox.pos.x, topBox.pos.y, currentBox.pos.z);
             }
-            currentBox = slicedBoxes[0];
-            boxes.add(currentBox);
-            currentBox = currentBox.copy();
-            currentBox.z += currentBox.l;
-            currentBox.setColor(getNextColor());
-
-            score++;
-            time = -HALF_PI;
-            tBoxesFocus -= currentBox.l;
-            return true;
-        } else {
-            return false;
+        }else{
+            float deltaY = abs(topBox.pos.y - currentBox.pos.y);
+            if(deltaY > ERROR_MARGIN){
+                stackBounds.y -= deltaY;
+                if(stackBounds.y < 0) return false;
+                float middle = topBox.pos.y + currentBox.pos.y / 2;
+                currentBox.setScale(stackBounds);
+                currentBox.setPos(topBox.pos.x, middle - (topBox.pos.y/2), topBox.pos.z + stackBounds.z);
+            }else{
+                currentBox.setPos(topBox.pos.x, topBox.pos.y, currentBox.pos.z);
+            }
         }
-    }
-
-    private Box[] getSlicedBox(Box knife, Box cheese) {
-        Box[] slicedCheese = new Box[3];
-        float leftX = max(knife.x, cheese.x);
-        float rightX = min(knife.x + knife.w, cheese.x + cheese.w);
-        float topY = max(knife.y, cheese.y);
-        float bottomY = min(knife.y + knife.h, cheese.y + cheese.h);
-        if (leftX < rightX && topY < bottomY) {
-            slicedCheese[0] = new Box(leftX, topY, cheese.z, rightX - leftX, bottomY - topY, boxLength);
-            slicedCheese[0].setColor(cheese.c);
-            fill(0, 255, 0, 100);
-            if (cheese.x > knife.x) {
-                leftX = rightX;
-                rightX = cheese.x + cheese.w;
-            } else {
-                rightX = leftX;
-                leftX = cheese.x;
-            }
-            slicedCheese[1] = new Box(leftX, topY, cheese.z, rightX - leftX, bottomY - topY, boxLength);
-            slicedCheese[1].setColor(cheese.c);
-            if (cheese.y > knife.y) {
-                topY = knife.y + knife.h;
-                bottomY = cheese.y + cheese.w;
-            } else {
-                topY = knife.y;
-                bottomY = cheese.y;
-            }
-            if (cheese.x < knife.x) {
-                leftX = knife.x;
-                rightX = cheese.x + cheese.w;
-            } else {
-                leftX = cheese.x;
-                rightX = knife.x + knife.w;
-            }
-
-            slicedCheese[2] = new Box(leftX, topY, cheese.z, rightX - leftX, bottomY - topY, boxLength);
-            slicedCheese[2].setColor(cheese.c);
-        }
-        return slicedCheese;
+        topBox = currentBox;
+        boxes.add(currentBox);
+        currentBox = new Box(currentBox.pos, stackBounds, getNextColor());
+        currentBox.pos.z += stackBounds.z;
+        tBoxesFocus -= boxLength;
+        isMovingOnX = !isMovingOnX;
+        return true;
     }
 
     private int count = 0;
@@ -151,145 +130,143 @@ public class Main extends PApplet {
     }
 
 
+    Box topBox;
+
     private void reset() {
         bgColor = color(random(150, 256), random(150, 256), random(150, 256));
         startColor = color(random(256), random(256), random(256));
         endColor = color(random(256), random(256), random(256));
+        stackBounds = initialStackBounds.copy();
         count = 0;
         boxes = new ArrayList<>();
-        Box box;
-        box = new Box(0, 0, 0, boxSize, boxSize, boxLength * 3);
-        boxes.add(box);
-        box.setColor(getNextColor());
-        box = new Box(0, 0, box.z + box.l, boxSize, boxSize, boxLength);
-        box.setColor(getNextColor());
-        currentBox = box;
+        topBox = new Box(new PVector(), stackBounds, getNextColor());
+        boxes.add(topBox);
+        currentBox = new Box(new PVector(), stackBounds, getNextColor());
+        currentBox.pos.z += stackBounds.z;
         tBoxesFocus = 0;
-        score = 0;
+        score = 1;
     }
 
     private float boxesFocus = 0;
     private float tBoxesFocus = 0;
     private float time = 0;
+    private boolean isMovingOnX = false;
 
     private void alternate() {
         if (!gameOver) {
             time += 0.03;
-            if (boxes.size() % 2 == 0) {
-                currentBox.x = sin(time) * (boxSize + 100);
-            } else {
-                currentBox.y = sin(time) * (boxSize + 100);
-            }
+            if (isMovingOnX)
+                currentBox.pos.x = sin(time) * (initialStackBounds.x + 100);
+            else
+                currentBox.pos.y = sin(time) * (initialStackBounds.y + 100);
+
         }
     }
 
-
-    void drawOrigin() {
+    void drawOrigin(PVector pos, float length) {
+        pushMatrix();
+        translate(pos.x, pos.y, pos.z);
         point(0, 0, 0);
         stroke(0, 0, 255);
-        line(0, 0, 0, 1000, 0, 0);
+        line(0, 0, 0, length, 0, 0);
         stroke(0, 255, 0);
-        line(0, 0, 0, 0, 1000, 0);
+        line(0, 0, 0, 0, length, 0);
         stroke(255, 0, 0);
-        line(0, 0, 0, 0, 0, 1000);
+        line(0, 0, 0, 0, 0, length);
+        popMatrix();
     }
 
+    void drawOrigin(){
+        drawOrigin(new PVector(), 1000);
+    }
+
+
     class Box {
-        float x, y, z, w, h, l;
-        float area;
-        int c;
+        PVector scale;
+        PVector pos;
+        int color;
 
-        Box(float x, float y, float z, float w, float h, float l) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-            this.h = h;
-            this.l = l;
-            area = w * h * l;
-        }
-
-        void set(float x, float y, float z, float w, float h, float l) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-            this.h = h;
-            this.l = l;
-        }
-
-        void setColor(int c) {
-            this.c = c;
+        Box(PVector pos, PVector scale, int color){
+            this.pos = pos.copy();
+            this.scale = scale.copy();
+            this.color = color;
         }
 
         void display() {
-            noStroke();
-            fill(c);
+            stroke(255, 200, 0);
+//            fill(color);
+            fill(255, 200, 0, 10);
+            pushMatrix();
+            translate(pos.x - scale.x/2, pos.y - scale.y/2, pos.z - scale.z/2);
             beginShape(QUAD);
-            vertex(x, y, z);
-            vertex(x + w, y, z);
-            vertex(x + w, y + h, z);
-            vertex(x, y + h, z);
+            vertex(0, 0, 0);
+            vertex(scale.x, 0, 0);
+            vertex(scale.x, scale.y, 0);
+            vertex(0, scale.y, 0);
 
-            vertex(x, y, z + l);
-            vertex(x + w, y, z + l);
-            vertex(x + w, y + h, z + l);
-            vertex(x, y + h, z + l);
+            vertex(0, 0, scale.z);
+            vertex(scale.x, 0, scale.z);
+            vertex(scale.x, scale.y, scale.z);
+            vertex(0, scale.y, scale.z);
 
-            vertex(x, y, z);
-            vertex(x, y, z + l);
-            vertex(x, y + h, z + l);
-            vertex(x, y + h, z);
+            vertex(0, 0, 0);
+            vertex(0, 0, scale.z);
+            vertex(0, scale.y, scale.z);
+            vertex(0, scale.y, 0);
 
-            vertex(x + w, y, z);
-            vertex(x + w, y, z + l);
-            vertex(x + w, y + h, z + l);
-            vertex(x + w, y + h, z);
+            vertex(scale.x, 0, 0);
+            vertex(scale.x, 0, scale.z);
+            vertex(scale.x, scale.y, scale.z);
+            vertex(scale.x, scale.y, 0);
 
-            vertex(x, y, z);
-            vertex(x, y, z + l);
-            vertex(x + w, y, z + l);
-            vertex(x + w, y, z);
+            vertex(0, 0, 0);
+            vertex(0, 0, scale.z);
+            vertex(scale.x, 0, scale.z);
+            vertex(scale.x, 0, 0);
 
-            vertex(x, y + h, z);
-            vertex(x, y + h, z + l);
-            vertex(x + w, y + h, z + l);
-            vertex(x + w, y + h, z);
+            vertex(0, scale.y, 0);
+            vertex(0, scale.y, scale.z);
+            vertex(scale.x, scale.y, scale.z);
+            vertex(scale.x, scale.y, 0);
             endShape();
+            popMatrix();
         }
 
-        Box copy() {
-            Box box = new Box(x, y, z, w, h, l);
-            box.setColor(c);
-            return box;
+        public void setScale(PVector scale) {
+            this.scale = scale.copy();
         }
 
+        public void setPos(float x, float y, float z) {
+            this.pos = new PVector(x, y, z);
+        }
     }
 
-    class Waves{
+    class Waves {
         ArrayList<Rect> waves = new ArrayList<>();
-        void init(float x, float y, float z, float w, float h){
+
+        void init(float x, float y, float z, float w, float h) {
             waves.add(new Rect(x, y, z, w, h));
         }
 
-        void update(){
-            for(Rect r : waves){
+        void update() {
+            for (Rect r : waves) {
                 r.update();
             }
-            for(int i = waves.size() - 1; i >= 0; i--){
+            for (int i = waves.size() - 1; i >= 0; i--) {
                 Rect r = waves.get(i);
-                if(r.off){
+                if (r.off) {
                     waves.remove(i);
-                }else{
+                } else {
                     r.update();
                 }
             }
         }
 
-        class Rect{
+        class Rect {
             float x, y, z, w, h, iW, iH;
             boolean off;
-            Rect(float x, float y, float z, float w, float h){
+
+            Rect(float x, float y, float z, float w, float h) {
                 this.x = x;
                 this.y = y;
                 this.w = w;
@@ -299,23 +276,23 @@ public class Main extends PApplet {
                 this.iH = h;
             }
 
-            void display(){
+            void display() {
                 fill(200, 255, 0, map(w * h, sq(max(iW, iH)), sq(max(iW, iH)) * 3, 255, 0));
                 pushMatrix();
-                translate((w- iW)/-2, (h - iH)/-2);
+                translate((w - iW) / -2, (h - iH) / -2);
                 beginShape(QUAD);
                 vertex(x, y, z, w, h);
                 vertex(x + w, y, z, w, h);
                 vertex(x + w, y + h, z, w, h);
-                vertex(x , y + h, z, w, h);
+                vertex(x, y + h, z, w, h);
                 endShape();
                 popMatrix();
             }
 
-            void update(){
+            void update() {
                 w = lerp(w, max(iW, iH) * 3f, 0.02f);
                 h = lerp(h, max(iW, iH) * 3, 0.02f);
-                if(sq(max(iW, iH)) * 3 - w * h < 0.01){
+                if (sq(max(iW, iH)) * 3 - w * h < 0.01) {
                     off = true;
                 }
                 display();
