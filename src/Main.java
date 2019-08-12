@@ -5,18 +5,18 @@ import java.util.ArrayList;
 
 public class Main extends PApplet {
     public Main() {
+        MAX_TILES_ONSCREEN = 20;
+        BONUS_GAIN = 10;
+        ERROR_MARGIN = 20;
+        MINIMUM_COMBO = 5;
+        COLOR_RANGE = 12;
         startColor = color(random(256), random(256), random(256));
         endColor = color(random(256), random(256), random(256));
         initialTileBounds = new PVector(350, 350, 40);
-        tileBounds = initialTileBounds.copy();
-        rubbles = new ArrayList<>();
         oscillatingSpeed = 0.03f;
-        MAX_TILES_ONSCREEN = 17;
         playButtonAlpha = 255;
-        minimumCombo = 0;
-        ERROR_MARGIN = 10;
-        desiredScale = 1f;
-        scale = 0.1f;
+        desiredDistance = 1;
+        distance = 0.1f;
     }
 
     public static void main(String[] args) {
@@ -34,9 +34,10 @@ public class Main extends PApplet {
     private Waves waves;
     private final int ERROR_MARGIN;
     private final int MAX_TILES_ONSCREEN;
+    private final int BONUS_GAIN;
 
-    private float scale;
-    private float desiredScale;
+    private float distance;
+    private float desiredDistance;
     private int bgColor;
     private float playButtonAlpha;
 
@@ -48,7 +49,7 @@ public class Main extends PApplet {
     private Tile oscillatingTile;
     private Tile topTile;
 
-    private int minimumCombo;
+    private final int MINIMUM_COMBO;
     private int score;
     private int highScore;
     private int combo;
@@ -59,6 +60,7 @@ public class Main extends PApplet {
     private float desiredCameraZ;
     private boolean isMovingOnX;
 
+    private final int COLOR_RANGE;
     private int colorPos;
     private int startColor;
     private int endColor;
@@ -70,6 +72,7 @@ public class Main extends PApplet {
     public void setup() {
         ortho(-width / 2, width / 2, -height / 2, height / 2, -width, width);
         particleSystem = new ParticleSystem();
+        rubbles = new ArrayList<>();
         waves = new Waves();
         textAlign(CENTER);
         textSize(60);
@@ -78,16 +81,17 @@ public class Main extends PApplet {
 
     public void draw() {
         background(bgColor);
-        scale = lerp(scale, desiredScale, 0.1f);
+        distance = lerp(distance, desiredDistance, 0.1f);
         translate(width / 2, height / 2);
         lights();
 
+        // Draw Tiles
         pushMatrix();
         {
             rotateX(QUARTER_PI);
             rotateZ(QUARTER_PI);
             cameraZ = lerp(cameraZ, desiredCameraZ, 0.08f);
-            scale(scale);
+            scale(distance);
             translate(0, 0, cameraZ);
 
             oscillatingTile.update();
@@ -146,6 +150,10 @@ public class Main extends PApplet {
         oscillatingSpeed = .03f;
     }
 
+    public void mousePressed(){
+        key = ' ';
+        keyPressed();
+    }
 
     @Override
     public void keyPressed() {
@@ -154,14 +162,14 @@ public class Main extends PApplet {
                 if (gameOver) {
                     gameOver = false;
                     gameStarted = false;
-                    desiredScale = 1;
+                    desiredDistance = 1;
                     newGame();
                 } else {
-                    if (!placeBox()) {
-                        desiredScale = min(0.8f, sqrt(tiles.size()) / (tiles.size() / 2f));
+                    if (!placeTile()) {
+                        desiredDistance = min(0.8f, sqrt(tiles.size()) / (tiles.size() / 2f));
                         displayTiles = tiles;
                         gameOver = true;
-                    } else oscillatingSpeed += (sqrt(tiles.size()) / sq(tiles.size())) / 300f;
+                    } else oscillatingSpeed += (sqrt(tiles.size()) / sq(tiles.size())) / 300;
                 }
 
             } else {
@@ -172,10 +180,7 @@ public class Main extends PApplet {
     }
 
     private void drawPlayButton(float x, float y, float z, float size) {
-        playButtonAlpha = lerp(playButtonAlpha, gameStarted
-                        ? 0
-                        : 255,
-                0.1f);
+        playButtonAlpha = lerp(playButtonAlpha, gameStarted ? 0 : 255, 0.1f);
         if (playButtonAlpha > 0.1) {
             // Centroid
             float cx = 0.25f;
@@ -212,7 +217,7 @@ public class Main extends PApplet {
     private void manageRubbles() {
         for (int i = rubbles.size() - 1; i >= 0; i--) {
             Tile r = rubbles.get(i);
-            if (r.off) {
+            if (r.isOff()) {
                 rubbles.remove(i);
             } else {
                 r.update();
@@ -220,7 +225,7 @@ public class Main extends PApplet {
         }
     }
 
-    private boolean placeBox() {
+    private boolean placeTile() {
         if (isMovingOnX) {
             combo = 0;
             float deltaX = topTile.pos.x - oscillatingTile.pos.x;
@@ -229,19 +234,22 @@ public class Main extends PApplet {
                 // Cut tile
                 tileBounds.x -= abs(deltaX);
                 if (tileBounds.x < 0) {
+                    // Rubble
                     rubbles.add(oscillatingTile);
                     oscillatingTile.dissolve();
                     return false;
                 }
+                // Rubble
                 float rubbleX = oscillatingTile.pos.x + (deltaX > 0 ? -1 : 1) * tileBounds.x / 2;
                 PVector rubbleScale = new PVector(deltaX, tileBounds.y, tileBounds.z);
-                Tile rubble = new Tile(new PVector(rubbleX, oscillatingTile.pos.y, oscillatingTile.pos.z), rubbleScale, oscillatingTile.color);
+                Tile rubble = new Tile(new PVector(rubbleX, oscillatingTile.pos.y, oscillatingTile.pos.z), rubbleScale, oscillatingTile.getColor());
                 rubbles.add(rubble);
                 rubble.dissolve();
-                score++;
+
                 float middle = topTile.pos.x + (oscillatingTile.pos.x / 2);
                 oscillatingTile.setScale(tileBounds);
                 oscillatingTile.setPos(middle - (topTile.pos.x / 2), topTile.pos.y, oscillatingTile.pos.z);
+                score++;
             } else {
 
                 // Align to top tile
@@ -249,9 +257,9 @@ public class Main extends PApplet {
                 waves.init(oscillatingTile.pos, tileBounds);
                 combo++;
                 score += ERROR_MARGIN - abs(deltaX);
-                if (combo >= minimumCombo) {
-                    oscillatingTile.scaleUp(10, 0);
-                    tileBounds.add(10, 0);
+                if (combo >= MINIMUM_COMBO) {
+                    oscillatingTile.scaleUp(BONUS_GAIN, 0);
+                    tileBounds.add(BONUS_GAIN, 0);
                 }
             }
         } else {
@@ -262,19 +270,22 @@ public class Main extends PApplet {
                 // Cut Tile
                 tileBounds.y -= abs(deltaY);
                 if (tileBounds.y < 0) {
+                    // Rubble
                     rubbles.add(oscillatingTile);
                     oscillatingTile.dissolve();
                     return false;
                 }
+                // Rubble
                 float rubbleY = oscillatingTile.pos.y + (deltaY > 0 ? -1 : 1) * tileBounds.y / 2;
                 PVector rubbleScale = new PVector(tileBounds.x, deltaY, tileBounds.z);
-                Tile rubble = new Tile(new PVector(oscillatingTile.pos.x, rubbleY, oscillatingTile.pos.z), rubbleScale, oscillatingTile.color);
+                Tile rubble = new Tile(new PVector(oscillatingTile.pos.x, rubbleY, oscillatingTile.pos.z), rubbleScale, oscillatingTile.getColor());
                 rubble.dissolve();
                 rubbles.add(rubble);
-                score++;
+
                 float middle = topTile.pos.y + (oscillatingTile.pos.y / 2);
                 oscillatingTile.setScale(tileBounds);
                 oscillatingTile.setPos(topTile.pos.x, middle - (topTile.pos.y / 2), oscillatingTile.pos.z);
+                score++;
             } else {
 
                 // Align to top tile
@@ -282,14 +293,17 @@ public class Main extends PApplet {
                 waves.init(oscillatingTile.pos, tileBounds);
                 combo++;
                 score += ERROR_MARGIN - abs(deltaY);
-                if (combo >= minimumCombo) {
-                    oscillatingTile.scaleUp(0, 10);
-                    tileBounds.add(0, 10);
+                if (combo >= MINIMUM_COMBO) {
+                    oscillatingTile.scaleUp(0, BONUS_GAIN);
+                    tileBounds.add(0, BONUS_GAIN);
                 }
             }
         }
+        spawnTile();
+        return true;
+    }
 
-        // Spawn Tile
+    private void spawnTile(){
         topTile = oscillatingTile;
         tiles.add(oscillatingTile);
         displayTiles.add(oscillatingTile);
@@ -297,21 +311,23 @@ public class Main extends PApplet {
             displayTiles.remove(0);
         }
         oscillatingTile = new Tile(oscillatingTile.pos.copy().add(0, 0, tileBounds.z), tileBounds, getNextColor());
+
+        //Focus
         desiredCameraZ -= tileBounds.z;
+
+        //Alternate
         isMovingOnX = !isMovingOnX;
         time = -HALF_PI;
         oscillate();
-        return true;
     }
 
     private int getNextColor() {
-        final int colorRange = 12;
-        colorPos = (colorPos + 1) % colorRange;
+        colorPos = (colorPos + 1) % COLOR_RANGE;
         if (colorPos == 0) {
             startColor = endColor;
             endColor = color(random(256), random(256), random(256));
         }
-        float amt = (float) colorPos / colorRange;
+        float amt = (float) colorPos / COLOR_RANGE;
         return lerpColor(startColor, endColor, amt);
     }
 
@@ -348,30 +364,32 @@ public class Main extends PApplet {
     */
 
     class Tile {
-        private PVector rot;
-        private PVector aVel;
-        float desiredAlpha = 255;
-        PVector desiredScale;
-        PVector desiredPos;
+        PVector rot;
+        PVector aVel;
+
         PVector scale;
+        PVector desiredScale;
         PVector pos;
+        PVector desiredPos;
         PVector vel;
 
         boolean dissolve;
-        float alpha = 0;
-        int color;
-        boolean off;
+        float alpha;
+        float desiredAlpha;
+        private int color;
+        private boolean off;
 
         Tile(PVector pos, PVector scale, int color) {
             this.desiredScale = scale.copy();
             this.desiredPos = pos.copy();
             this.scale = scale.copy();
             this.pos = pos.copy();
-            this.color = color;
+            this.setColor(color);
 
             aVel = PVector.random3D().mult(0.01f);
             rot = new PVector();
             vel =  PVector.random3D().mult(0.08f);
+            desiredAlpha = 255;
         }
 
         void update() {
@@ -379,7 +397,7 @@ public class Main extends PApplet {
             PVector pScale = scale.copy();
             scale.lerp(desiredScale, 0.2f);
             pos.add(PVector.sub(scale, pScale).mult(0.5f));
-            if (alpha < 0.1) off = true;
+            if (alpha < 0.1) setOff(true);
             alpha = lerp(alpha, desiredAlpha, 0.04f);
             if(dissolve) {
                 rot.add(aVel);
@@ -391,7 +409,7 @@ public class Main extends PApplet {
 
         void display() {
             noStroke();
-            fill(color, alpha);
+            fill(getColor(), alpha);
 
             // Drawing tile
             pushMatrix();
@@ -437,23 +455,39 @@ public class Main extends PApplet {
             popMatrix();
         }
 
-        private void scaleUp(float x, float y) {
+        void scaleUp(float x, float y) {
             desiredScale.add(x, y, 0);
         }
 
-        private void setScale(PVector scale) {
+        void setScale(PVector scale) {
             this.desiredScale = scale.copy();
             this.scale = scale.copy();
         }
 
-        private void setPos(float x, float y, float z) {
+        void setPos(float x, float y, float z) {
             this.pos = new PVector(x, y, z);
         }
 
-        public void dissolve() {
+        void dissolve() {
             desiredAlpha = 0;
             alpha = 255;
             dissolve = true;
+        }
+
+        int getColor() {
+            return color;
+        }
+
+        void setColor(int color) {
+            this.color = color;
+        }
+
+        boolean isOff() {
+            return off;
+        }
+
+        void setOff(boolean off) {
+            this.off = off;
         }
     }
 
@@ -519,8 +553,8 @@ public class Main extends PApplet {
         void run() {
             if (random(1) < 0.05) {
                 particles.add(new Particle(
-                        random(-width / 2, width / 2) - 300,
-                        random(-height / 2, height / 2) - 300,
+                        random(-width / 2, width / 2) - 400,
+                        random(-height / 2, height / 2) - 400,
                         random(-200, 200) - cameraZ)
                 );
             }
@@ -531,53 +565,55 @@ public class Main extends PApplet {
             }
         }
 
+        class Particle {
+            PVector rot;
+            PVector aVel;
+            PVector pos;
+
+            boolean off;
+
+            float alpha;
+            float time;
+            int color;
+
+            Particle(float x, float y, float z) {
+                color = color(
+                        random(150, 256),
+                        random(150, 256),
+                        random(150, 256)
+                );
+                aVel = PVector.random3D().mult(0.01f);
+                pos = new PVector(x, y, z);
+                rot = PVector.random3D();
+            }
+
+
+            void update() {
+                alpha = (-cos(time) * 128) + 128;
+                pos.add(0, 0, 0.3f);
+                rot.add(aVel);
+                time += 0.01;
+                if (time > TWO_PI) {
+                    off = true;
+                }
+                display();
+            }
+
+            void display() {
+                pushMatrix();
+                {
+                    translate(pos.x, pos.y, pos.z);
+                    fill(color, alpha);
+                    rotateX(rot.x);
+                    rotateY(rot.y);
+                    rotateZ(rot.z);
+                    box(10);
+                }
+                popMatrix();
+            }
+        }
+
     }
 
-    class Particle {
-        PVector rot;
-        PVector aVel;
-        PVector pos;
 
-        boolean off;
-
-        float alpha;
-        float time;
-        int color;
-
-        Particle(float x, float y, float z) {
-            color = color(
-                    random(150, 256),
-                    random(150, 256),
-                    random(150, 256)
-            );
-            aVel = PVector.random3D().mult(0.01f);
-            pos = new PVector(x, y, z);
-            rot = PVector.random3D();
-        }
-
-
-        void update() {
-            alpha = (-cos(time) * 128) + 128;
-            pos.add(0, 0, 0.3f);
-            rot.add(aVel);
-            time += 0.01;
-            if (time > TWO_PI) {
-                off = true;
-            }
-            display();
-        }
-
-        void display() {
-            pushMatrix();
-            {
-                translate(pos.x, pos.y, pos.z);
-                fill(color, alpha);
-                rotateX(rot.x);
-                rotateY(rot.y);
-                rotateZ(rot.z);
-                box(10);
-            }
-            popMatrix();
-        }
-    }
 }

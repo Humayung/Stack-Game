@@ -7,10 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a34f9b4-7b46-43aa-9d2c-d9932c9d4c22" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/peasy_math.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stack.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Stack.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Stack_jar/Stack.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Stack_jar/Stack.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Stack/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main.class" afterDir="false" />
@@ -31,16 +28,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+            <state relative-caret-position="-1162">
+              <caret line="488" column="31" selection-start-line="488" selection-start-column="31" selection-end-line="488" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#607#608#0" expanded="true" />
-                <element signature="e#649#650#0" expanded="true" />
-                <element signature="e#13722#13723#0" expanded="true" />
-                <element signature="e#13978#13979#0" expanded="true" />
-                <element signature="e#12018#12019#0" expanded="true" />
-                <element signature="e#12073#12074#0" expanded="true" />
+                <element signature="e#13751#13752#0" expanded="true" />
+                <element signature="e#13800#13801#0" expanded="true" />
+                <element signature="e#14001#14002#0" expanded="true" />
+                <element signature="e#14056#14057#0" expanded="true" />
+                <element signature="e#14510#14511#0" expanded="true" />
+                <element signature="e#14546#14547#0" expanded="true" />
+                <element signature="e#14582#14583#0" expanded="true" />
+                <element signature="e#14624#14625#0" expanded="true" />
+                <element signature="e#14651#14652#0" expanded="true" />
+                <element signature="e#14685#14686#0" expanded="true" />
+                <element signature="e#14721#14722#0" expanded="true" />
+                <element signature="e#14759#14760#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,8 +89,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -162,6 +165,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -219,14 +223,21 @@
       <option name="project" value="LOCAL" />
       <updated>1565543467319</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Adding rubbles">
+      <created>1565560548109</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1565560548109</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1366" height="736" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20984848" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2128788" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -234,8 +245,8 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32843137" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32843137" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -257,7 +268,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modifying place box algorithm and refactor" />
     <MESSAGE value="Refactoring, adding particles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, adding particles" />
+    <MESSAGE value="Adding rubbles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding rubbles" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar:///usr/lib/jvm/jdk-12.0.1/lib/src.zip!/java.base/java/util/function/Consumer.java">
@@ -267,41 +279,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RectImpl.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/WavesImpl.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/TileImpl.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/Compressed/processing-sound-master/src/processing/sound/sound.jar!/ processing/sound/SoundFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RectImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/WavesImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/TileImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/MainImpl.java" />
+    <entry file="jar://$USER_HOME$/Downloads/Compressed/processing-sound-master/src/processing/sound/sound.jar!/ processing/sound/SoundFile.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+        <state relative-caret-position="-1162">
+          <caret line="488" column="31" selection-start-line="488" selection-start-column="31" selection-end-line="488" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#607#608#0" expanded="true" />
-            <element signature="e#649#650#0" expanded="true" />
-            <element signature="e#13722#13723#0" expanded="true" />
-            <element signature="e#13978#13979#0" expanded="true" />
-            <element signature="e#12018#12019#0" expanded="true" />
-            <element signature="e#12073#12074#0" expanded="true" />
+            <element signature="e#13751#13752#0" expanded="true" />
+            <element signature="e#13800#13801#0" expanded="true" />
+            <element signature="e#14001#14002#0" expanded="true" />
+            <element signature="e#14056#14057#0" expanded="true" />
+            <element signature="e#14510#14511#0" expanded="true" />
+            <element signature="e#14546#14547#0" expanded="true" />
+            <element signature="e#14582#14583#0" expanded="true" />
+            <element signature="e#14624#14625#0" expanded="true" />
+            <element signature="e#14651#14652#0" expanded="true" />
+            <element signature="e#14685#14686#0" expanded="true" />
+            <element signature="e#14721#14722#0" expanded="true" />
+            <element signature="e#14759#14760#0" expanded="true" />
           </folding>
         </state>
       </provider>
