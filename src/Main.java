@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class Main extends PApplet {
     public Main() {
         MAX_TILES_ONSCREEN = 20;
-        BONUS_GAIN = 10;
-        ERROR_MARGIN = 20;
-        MINIMUM_COMBO = 5;
+        BONUS_GAIN = 20;
+        ERROR_MARGIN = 15;
+        MINIMUM_COMBO = 10;
         COLOR_RANGE = 12;
         startColor = color(random(256), random(256), random(256));
         endColor = color(random(256), random(256), random(256));
@@ -458,6 +458,8 @@ public class Main extends PApplet {
 
         void scaleUp(float x, float y) {
             desiredScale.add(x, y, 0);
+            desiredScale.x = constrain(desiredScale.x, 0, initialTileBounds.x);
+            desiredScale.y = constrain(desiredScale.y, 0, initialTileBounds.y);
         }
 
         void setScale(PVector scale) {
