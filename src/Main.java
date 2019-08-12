@@ -95,7 +95,9 @@ public class Main extends PApplet {
             translate(0, 0, cameraZ);
 
             oscillatingTile.update();
-            displayTiles.forEach(Tile::update);
+            for (Tile displayTile : displayTiles) {
+                displayTile.update();
+            }
             manageRubbles();
             waves.update();
             particleSystem.run();
@@ -155,7 +157,6 @@ public class Main extends PApplet {
         keyPressed();
     }
 
-    @Override
     public void keyPressed() {
         if (key == ' ') {
             if (gameStarted) {
@@ -499,7 +500,6 @@ public class Main extends PApplet {
         }
 
         void update() {
-            waves.forEach(Rect::update);
             for (int i = waves.size() - 1; i >= 0; i--) {
                 Rect r = waves.get(i);
                 if (r.off) waves.remove(i);

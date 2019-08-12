@@ -8,9 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0a34f9b4-7b46-43aa-9d2c-d9932c9d4c22" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves$Rect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main$Waves.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Stack/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Stack/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,22 +25,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1162">
-              <caret line="488" column="31" selection-start-line="488" selection-start-column="31" selection-end-line="488" selection-end-column="31" />
+            <state relative-caret-position="105">
+              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#13751#13752#0" expanded="true" />
-                <element signature="e#13800#13801#0" expanded="true" />
-                <element signature="e#14001#14002#0" expanded="true" />
-                <element signature="e#14056#14057#0" expanded="true" />
-                <element signature="e#14510#14511#0" expanded="true" />
-                <element signature="e#14546#14547#0" expanded="true" />
-                <element signature="e#14582#14583#0" expanded="true" />
-                <element signature="e#14624#14625#0" expanded="true" />
-                <element signature="e#14651#14652#0" expanded="true" />
-                <element signature="e#14685#14686#0" expanded="true" />
-                <element signature="e#14721#14722#0" expanded="true" />
-                <element signature="e#14759#14760#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,7 +74,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -152,6 +136,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -230,14 +215,21 @@
       <option name="project" value="LOCAL" />
       <updated>1565560548109</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Refactoring">
+      <created>1565597263579</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1565597263580</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1366" height="736" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2128788" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2159091" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -269,7 +261,8 @@
     <MESSAGE value="Modifying place box algorithm and refactor" />
     <MESSAGE value="Refactoring, adding particles" />
     <MESSAGE value="Adding rubbles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding rubbles" />
+    <MESSAGE value="Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar:///usr/lib/jvm/jdk-12.0.1/lib/src.zip!/java.base/java/util/function/Consumer.java">
@@ -286,22 +279,10 @@
     <entry file="jar://$USER_HOME$/Downloads/Compressed/processing-sound-master/src/processing/sound/sound.jar!/ processing/sound/SoundFile.java" />
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1162">
-          <caret line="488" column="31" selection-start-line="488" selection-start-column="31" selection-end-line="488" selection-end-column="31" />
+        <state relative-caret-position="105">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#13751#13752#0" expanded="true" />
-            <element signature="e#13800#13801#0" expanded="true" />
-            <element signature="e#14001#14002#0" expanded="true" />
-            <element signature="e#14056#14057#0" expanded="true" />
-            <element signature="e#14510#14511#0" expanded="true" />
-            <element signature="e#14546#14547#0" expanded="true" />
-            <element signature="e#14582#14583#0" expanded="true" />
-            <element signature="e#14624#14625#0" expanded="true" />
-            <element signature="e#14651#14652#0" expanded="true" />
-            <element signature="e#14685#14686#0" expanded="true" />
-            <element signature="e#14721#14722#0" expanded="true" />
-            <element signature="e#14759#14760#0" expanded="true" />
           </folding>
         </state>
       </provider>
