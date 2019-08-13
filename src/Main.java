@@ -16,34 +16,34 @@ public class Main extends PApplet {
     }
 
     public Main() {
-        startColor = color(random(256),
+        startColor            = color(random(256),
                 random(256),
                 random(256));
-        endColor   = color(random(256),
+        endColor              = color(random(256),
                 random(256),
                 random(256));
-        oscillatingSpeed = .03f;
-        playButtonAlpha = 0;
-        titleAlpha = 255;
-        desiredDistance = 1;
-        distance = 0.1f;
-        score = new Score();
-        cameraPos = new PVector();
-        desiredCameraPos = new PVector();
+        oscillatingSpeed      = .03f;
+        playButtonAlpha       = 0;
+        titleAlpha            = 255;
+        distance              = 0.1f;
+        score                 = new Score();
+        cameraPos             = new PVector();
+        desiredCameraPos      = new PVector();
         desiredGlobalRotation = new PVector(QUARTER_PI, 0, QUARTER_PI);
-        globalRotation = new PVector();
-        screenW = 805;
+        globalRotation        = new PVector();
+        screenW               = 805;
+        screenH               = 483;
         desiredGlobalPosition = new PVector(screenW / 2, screenH / 2, 0);
-        globalPosition = desiredGlobalPosition.copy();
-        DEFAULT_TILE_SCALE = new PVector(screenH / 2.2f, screenH / 2.2f, screenH / 14f);
-        BONUS_GAIN = screenH / 40f;
-        ERROR_MARGIN = screenH / 40f;
-        MAX_SCORE_GAIN = 100;
-        particleSystem = new ParticleSystem(this);
-        rubbles = new ArrayList<>();
-        waves = new Waves(this);
-        MAX_TILES_ONSCREEN = 20;
-        MINIMUM_COMBO = 5;
+        globalPosition        = desiredGlobalPosition.copy();
+        DEFAULT_TILE_SCALE    = new PVector(screenH / 2.2f, screenH / 2.2f, screenH / 14f);
+        BONUS_GAIN            = screenH / 40f;
+        ERROR_MARGIN          = screenH / 40f;
+        MAX_SCORE_GAIN        = 100;
+        cubie                 = new Cubie(this);
+        rubbles               = new ArrayList<>();
+        waves                 = new Waves(this);
+        MAX_TILES_ONSCREEN    = 20;
+        MINIMUM_COMBO         = 5;
     }
 
     public void settings() {
@@ -51,7 +51,7 @@ public class Main extends PApplet {
     }
 
     private final int screenW;
-    private final int screenH = 483;
+    private final int screenH;
 
     private ArrayList<Tile> tiles;
     private ArrayList<Tile> displayTiles;
@@ -81,7 +81,7 @@ public class Main extends PApplet {
     private       float   oscillatingSpeed;
     private       boolean isMovingOnX;
 
-    private ParticleSystem particleSystem;
+    private Cubie cubie;
 
     private final int     MINIMUM_COMBO;
     private       Score   score;
@@ -126,12 +126,10 @@ public class Main extends PApplet {
                 rotateZ(globalRotation.z);
                 scale(distance);
                 translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-                for (Tile displayTile : displayTiles) {
-                    displayTile.update();
-                }
+                displayTiles.forEach(Tile::update);
                 updateRubbles();
                 waves.update();
-                particleSystem.run();
+                cubie.run();
             }
             popMatrix();
             if (gameStarted) oscillate();
@@ -162,7 +160,7 @@ public class Main extends PApplet {
                 textSize(height / 12.8f);
                 text(score.score, 0, -height / 3.5f);
                 textSize(height / 19.2f);
-                text(score.stack, 0, -height / (-3.5f + 12.8f));
+                text(score.stack, 0, -(height / 3.5f) + height / 12.8f);
             } else {
                 textSize(height / 12.8f);
                 text(score.highScore, 0, (height / 3.5f));
@@ -214,7 +212,7 @@ public class Main extends PApplet {
         globalRotation.z %= TWO_PI;
         desiredGlobalRotation = new PVector(QUARTER_PI, 0, QUARTER_PI);
         desiredCameraPos = topTile.pos;
-        desiredGlobalPosition.set(width / 2 + 200, height / 2, 0);
+        desiredGlobalPosition.set(width / 2f + height/3.84f, height / 2, 0);
         score.reset();
     }
 

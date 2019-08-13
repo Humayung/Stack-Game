@@ -3,11 +3,11 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 
-class ParticleSystem {
-    private ArrayList<Particle> particles = new ArrayList<>();
-    private PApplet             p;
+class Cubie {
+    private ArrayList<Cube> cubes = new ArrayList<>();
+    private PApplet         p;
 
-    ParticleSystem( PApplet p ) {
+    Cubie( PApplet p ) {
         this.p = p;
     }
 
@@ -17,16 +17,16 @@ class ParticleSystem {
             final float r = p.random(p.height / 1.38f, p.height / 0.93f);
             final float x = PApplet.sin(a) * r;
             final float y = PApplet.cos(a) * r;
-            particles.add(new Particle(x, y, Main.topTile.pos.z + p.random(- p.height / 2)));
+            cubes.add(new Cube(x, y, Main.topTile.pos.z + p.random(- p.height / 2)));
         }
-        for (int i = particles.size() - 1; i >= 0; i--) {
-            final Particle p = particles.get(i);
-            if (p.off) particles.remove(i);
+        for (int i = cubes.size() - 1; i >= 0; i--) {
+            final Cube p = cubes.get(i);
+            if (p.off) cubes.remove(i);
             else p.update();
         }
     }
 
-    class Particle {
+    class Cube {
         PVector rot;
         PVector aVel;
         PVector pos;
@@ -38,7 +38,7 @@ class ParticleSystem {
         float time;
         int   color_;
 
-        Particle( float x, float y, float z ) {
+        Cube( float x, float y, float z ) {
             color_ = p.color(
                     p.random(150, 256),
                     p.random(150, 256),
@@ -56,9 +56,7 @@ class ParticleSystem {
             pos.add(0, 0, 0.3f);
             rot.add(aVel);
             time += 0.01;
-            if (time > p.TWO_PI) {
-                off = true;
-            }
+            if (time > p.TWO_PI) off = true;
             display();
         }
 

@@ -42,9 +42,7 @@ class Tile {
         if (dissolve) {
             rot.add(aVel);
             pos.add(vel);
-            if (alpha < 0.1) {
-                setOff();
-            }
+            if (alpha < 0.1) setOff();
         }
 
         display();
