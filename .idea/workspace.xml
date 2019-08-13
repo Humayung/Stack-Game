@@ -6,33 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a34f9b4-7b46-43aa-9d2c-d9932c9d4c22" name="Default Changelist" comment="Adding Title etc, total refactor">
-      <change afterPath="$PROJECT_DIR$/Frame.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/core.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/export.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-linux-aarch64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-linux-amd64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-linux-armv6hf.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-linux-i586.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-macosx-universal.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-windows-amd64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt-natives-windows-i586.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/gluegen-rt.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-linux-aarch64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-linux-amd64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-linux-armv6hf.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-linux-i586.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-macosx-universal.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-windows-amd64.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all-natives-windows-i586.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/library/jogl-all.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Stack/META-INF/Stack.kotlin_module" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Stack/data/Attack_Tap01.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ParticleSystem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Waves.java" afterDir="false" />
+    <list default="true" id="0a34f9b4-7b46-43aa-9d2c-d9932c9d4c22" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frame.png" beforeDir="false" afterPath="$PROJECT_DIR$/frame.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Stack/data/Attack_Tap01.mp3" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+            <state relative-caret-position="135">
+              <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
               <folding>
                 <element signature="e#0#16754#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -75,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Waves.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="52" lean-forward="true" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+            <state relative-caret-position="225">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#200#201#0" expanded="true" />
@@ -151,6 +128,12 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="humayung &lt;humayungmirza@gmail.com&gt;" />
+        <option value="Mirza MY Humayung" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -161,8 +144,8 @@
         <option value="$PROJECT_DIR$/src/TileImpl.java" />
         <option value="$PROJECT_DIR$/src/MainImpl.java" />
         <option value="$PROJECT_DIR$/src/Tile.java" />
-        <option value="$PROJECT_DIR$/src/Waves.java" />
         <option value="$PROJECT_DIR$/src/ParticleSystem.java" />
+        <option value="$PROJECT_DIR$/src/Waves.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -300,12 +283,18 @@
       <option name="project" value="LOCAL" />
       <updated>1565613264261</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Adding Title etc, total refactor">
+      <created>1565723357159</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1565723357160</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="32" width="1366" height="736" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23030303" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -324,7 +313,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" visible="true" weight="0.32843137" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32843137" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -334,6 +323,9 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Modifying place box algorithm and refactor" />
@@ -351,33 +343,6 @@
     <entry file="file://$PROJECT_DIR$/src/TileImpl.java" />
     <entry file="file://$PROJECT_DIR$/src/MainImpl.java" />
     <entry file="jar://$USER_HOME$/Downloads/Compressed/processing-sound-master/src/processing/sound/sound.jar!/ processing/sound/SoundFile.java" />
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="77" column="4" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#16754#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#288#289#0" expanded="true" />
-            <element signature="e#330#331#0" expanded="true" />
-            <element signature="e#1444#1445#0" expanded="true" />
-            <element signature="e#1487#1488#0" expanded="true" />
-            <element signature="e#9091#9092#0" expanded="true" />
-            <element signature="e#9146#9147#0" expanded="true" />
-            <element signature="e#9189#9190#0" expanded="true" />
-            <element signature="e#9246#9247#0" expanded="true" />
-            <element signature="e#9285#9286#0" expanded="true" />
-            <element signature="e#9337#9338#0" expanded="true" />
-            <element signature="e#9377#9378#0" expanded="true" />
-            <element signature="e#9401#9402#0" expanded="true" />
-            <element signature="e#9526#9527#0" expanded="true" />
-            <element signature="e#9569#9570#0" expanded="true" />
-            <element signature="e#16234#16235#0" expanded="true" />
-            <element signature="e#16304#16305#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Tile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -413,8 +378,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Waves.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="52" lean-forward="true" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
+        <state relative-caret-position="225">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#200#201#0" expanded="true" />
@@ -423,6 +388,33 @@
             <element signature="e#325#326#0" expanded="true" />
             <element signature="e#386#387#0" expanded="true" />
             <element signature="e#441#442#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="109" column="23" selection-start-line="109" selection-start-column="23" selection-end-line="109" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#16754#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#288#289#0" expanded="true" />
+            <element signature="e#330#331#0" expanded="true" />
+            <element signature="e#1444#1445#0" expanded="true" />
+            <element signature="e#1487#1488#0" expanded="true" />
+            <element signature="e#9091#9092#0" expanded="true" />
+            <element signature="e#9146#9147#0" expanded="true" />
+            <element signature="e#9189#9190#0" expanded="true" />
+            <element signature="e#9246#9247#0" expanded="true" />
+            <element signature="e#9285#9286#0" expanded="true" />
+            <element signature="e#9337#9338#0" expanded="true" />
+            <element signature="e#9377#9378#0" expanded="true" />
+            <element signature="e#9401#9402#0" expanded="true" />
+            <element signature="e#9526#9527#0" expanded="true" />
+            <element signature="e#9569#9570#0" expanded="true" />
+            <element signature="e#16234#16235#0" expanded="true" />
+            <element signature="e#16304#16305#0" expanded="true" />
           </folding>
         </state>
       </provider>
