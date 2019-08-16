@@ -6,6 +6,7 @@
  */
 
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PVector;
 import processing.event.MouseEvent;
 import java.util.ArrayList;
@@ -100,8 +101,11 @@ public class Main extends PApplet {
     private       float titleAlpha;
 
 
+    PFont titleFont1;
+    PFont titleFont2;
     public void setup() {
-        textFont(createFont("Lato Light", height / 3.45f));
+        titleFont2 = loadFont("Lato-Bold-48.vlw");
+        titleFont1 = loadFont("Lato-Hairline-120.vlw");
         newGame();
     }
 
@@ -152,36 +156,38 @@ public class Main extends PApplet {
     private void updateUI() {
         // Play Button, Score, and HighScore
         pushMatrix();
-        translate(width / 2, height / 2, height);
+        translate(width/2, height/2, height);
         textAlign(CENTER);
         if (!titleScreen) {
             fill(255 - red(desiredBgColor), 255 - green(desiredBgColor), 255 - blue(desiredBgColor));
+            textFont(titleFont2);
             if (gameStarted) {
-                textSize(height / 12.8f);
+                textSize(height/12.8f);
                 text(score.score, 0, -height / 3.5f);
-                textSize(height / 19.2f);
-                text(score.stack, 0, -(height / 3.5f) + height / 12.8f);
+                textSize(height/19.2f);
+                text(score.stack, 0, -height / 3.5f + height/12.8f);
             } else {
-                textSize(height / 12.8f);
+                textSize(height/12.8f);
                 text(score.highScore, 0, (height / 3.5f));
-                textSize(height / 19.2f);
-                text(score.highStack, 0, (height / 3.5f) + height / 12.8f);
+                textSize(height/19.2f);
+                text(score.highStack, 0, (height / 3.5f) + height/12.8f);
             }
         }
-        drawPlayButton(0, 0, height / 4f);
+        drawPlayButton(0, 0, height/4f);
         drawTitle();
         popMatrix();
     }
 
     private void drawTitle() {
-        textSize(height / 3.45f);
+        textSize(height/3.45f);
+        titleAlpha = lerp(titleAlpha, titleScreen ? 255 : 0, 0.1f);
         fill(255 - red(desiredBgColor), 255 - green(desiredBgColor), 255 - blue(desiredBgColor), titleAlpha);
         if (titleAlpha > 100) {
+            textFont(titleFont1);
             textAlign(LEFT, CENTER);
-            text("STACK", -width / 2.3f, 0);
-            textAlign(LEFT, BOTTOM);
-            textSize(height / 20.7f);
-            text("P R O C E S S I N G", -width / 2.3f, -height / 16.1f);
+            text("STACKER", -width/2.3f, 0);
+            textSize(height/26f);
+            text("Inspired by KETCHAPP", -width/2.3f, -height/16.1f + height/5.5f);
         }
     }
 
