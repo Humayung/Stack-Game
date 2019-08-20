@@ -1,5 +1,5 @@
 # Stacker
-This game was inspired by Android game by Ketchapp: 'Stack', was one of the popular game on the internet.
+This game was inspired by Android game by Ketchapp: 'Stack', was one of the popular game on the internet with slightly different styles
 
 # Screenshot
 ![Reference](https://github.com/Humayung/Stacker-processing/blob/master/frame926.png)
